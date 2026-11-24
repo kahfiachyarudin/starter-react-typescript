@@ -2,7 +2,7 @@
 
 Form pendaftaran peminatan divisi untuk santri, dibuat dengan **React Hook Form** dan **Zod** untuk validasi input secara real-time. Tersedia dalam dua versi: JavaScript dan TypeScript.
 
-🔗 **Repository:** [ ]
+🔗 **Repository:** [https://github.com/kahfiachyarudin/starter-react-typescript]
 
 ## Fitur
 
