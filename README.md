@@ -1,98 +1,63 @@
-# 🚀 Starter Project — ASAS Praktek Frontend Web Development
+# Form Peminatan Santri
 
-**Pondok Tahfizh Plus IT Abu Dzar — Kelas XI**  
-**Teknologi:** React 19 + TypeScript + Vite + Tailwind CSS + React Hook Form + Zod
+Form pendaftaran peminatan divisi untuk santri, dibuat dengan **React Hook Form** dan **Zod** untuk validasi input secara real-time. Tersedia dalam dua versi: JavaScript dan TypeScript.
 
-Repository ini adalah starter template resmi untuk pelaksanaan **Asesmen Akhir Semester (ASAS) Praktek**. Semua dependensi utama sudah dikonfigurasi, sehingga santri dapat langsung fokus menyusun form dan validasi skema Zod.
+🔗 **Repository:** [ ]
 
----
+## Fitur
 
-## 📋 Langkah 1: Fork Repository ke Akun GitHub Santri
+- Validasi real-time (`mode: "onChange"`) menggunakan `zodResolver`.
+- Pesan error berwarna merah muncul di bawah kolom yang salah diisi.
+- Tombol **Kirim Pendaftaran** otomatis nonaktif selama ada kolom yang belum valid.
+- Setelah submit, data ditampilkan di `console.log` dan dirender sebagai kartu ringkasan pendaftaran di bawah form.
 
-Sebelum melakukan clone ke komputer masing-masing:
+## Aturan Validasi
 
-1. Buka repository induk ini di browser:  
-   👉 **`https://github.com/abu-umair/starter-react-typescript`**
-2. Klik tombol **Fork** (di pojok kanan atas halaman GitHub).
-3. Pilih akun GitHub Anda sendiri, lalu klik **Create fork**.
-4. Sekarang Anda memiliki salinan repository di akun Anda sendiri:  
-   `https://github.com/<USERNAME-ANDA>/starter-react-typescript`
+| Field | Aturan |
+| --- | --- |
+| Nama Santri | String, minimal 3 karakter |
+| NIS | Angka, minimal 100 |
+| Umur | Angka, 15 sampai 20 tahun |
+| Pilihan Divisi | Wajib pilih: `Frontend`, `Backend`, atau `UIUX` |
+| Keahlian | Checkbox ganda, minimal 1 (`HTML`, `CSS`, `JavaScript`, `React`) |
+| Persetujuan Tata Tertib | Checkbox, wajib dicentang |
 
----
+## Struktur File
 
-## 💻 Langkah 2: Clone ke Komputer Lokal (Teknik Spasi Titik)
+| File | Keterangan |
+| --- | --- |
+| `peminatanSchema.js` | Skema Zod versi JavaScript (memakai `z.coerce.number()`) |
+| `PeminatanFormJS.jsx` | Komponen form versi JavaScript |
+| `peminatanSchemaTS.ts` | Skema Zod versi TypeScript (`z.number()` murni) + tipe `SantriFormData` dari `z.infer` |
+| `PeminatanFormTS.tsx` | Komponen form versi TypeScript (generic type + `valueAsNumber: true`) |
 
-Teknik `git clone <url> .` digunakan agar file proyek langsung masuk ke dalam folder yang sedang Anda buka, **tanpa membuat subfolder baru**.
+## Perbedaan Versi JS dan TS
 
-1. Buka folder kerja ujian Anda di File Explorer (misal: `D:\Praktek-XI\asas-nama-santri`).
-2. Klik kanan di dalam folder tersebut lalu pilih **Open in Terminal** (atau buka melalui VS Code).
-3. Pastikan terminal berada di dalam folder yang kosong tersebut.
-4. Jalankan perintah clone dengan menyertakan **spasi dan tanda titik (` .`)** di bagian akhir:
+- **JS:** `nis` dan `umur` memakai `z.coerce.number()` sehingga nilai input otomatis diubah menjadi angka oleh Zod.
+- **TS:** `nis` dan `umur` memakai `z.number()` murni, dan konversi dilakukan di input lewat `register("nis", { valueAsNumber: true })`. Tipe data diambil otomatis dari skema, tanpa interface manual.
 
-```bash
-git clone https://github.com/<USERNAME-ANDA>/starter-react-typescript.git .
-```
-
-> ⚠️ **PENTING:** Pastikan URL yang di-clone adalah URL repo **hasil Fork Anda sendiri**, dan jangan lupa tanda titik di ujungnya!
-
----
-
-## 📦 Langkah 3: Install Dependensi & Jalankan Server
-
-Setelah proses clone selesai, jalankan perintah berikut di terminal:
+## Instalasi
 
 ```bash
-# 1. Install semua paket dependensi yang dibutuhkan
-npm install
-
-# 2. Jalankan development server lokal
-npm run dev
+npm install react-hook-form @hookform/resolvers zod
 ```
 
-Buka URL lokal yang muncul di terminal (biasanya `http://localhost:5173`) di browser Anda. Jika halaman welcome ASAS muncul, proyek siap dikerjakan.
+Pastikan Tailwind CSS sudah terpasang, karena tampilan memakai class Tailwind.
 
----
+> Kode ditulis dengan sintaks Zod v3. Jika memakai Zod v4, opsi pesan error khusus (`invalid_type_error`, `errorMap`) perlu disesuaikan.
 
-## 🛠️ Langkah 4: Panduan Pengerjaan Tugas
+## Cara Pakai
 
-1. **Kebebasan Struktur File:**  
-   Santri dibebaskan membuat folder dan file baru di dalam `src/` (misalnya membuat folder `components/`, `schemas/`, atau `types/` sesuai kenyamanan dan kerapian arsitektur kode).
-2. **Paket yang Sudah Tersedia:**
-   - `react` & `react-dom`
-   - `react-hook-form`
-   - `zod`
-   - `@hookform/resolvers/zod`
-   - `tailwindcss` (Tailwind CSS v4)
-3. **Komponen Utama:**
-   - Hubungkan atau render komponen form yang Anda buat ke dalam `src/App.tsx`.
-   - Pastikan form memiliki input teks/number, radio input (pilihan single-select), checkbox, dan tombol submit.
-   - Terapkan validasi skema Zod dan tampilkan pesan error jika data tidak valid.
-   - Tampilkan ringkasan data hasil submit di layar setelah form berhasil dikirim.
+Import salah satu komponen ke `App`:
 
----
+```jsx
+import PeminatanFormJS from "./PeminatanFormJS";
+// atau
+import PeminatanFormTS from "./PeminatanFormTS";
 
-## 📤 Langkah 5: Simpan & Push Hasil Tugas ke GitHub
-
-Setelah selesai mengerjakan dan memastikan tidak ada error:
-
-1. Simpan semua perubahan:
-```bash
-git add .
+export default function App() {
+  return <PeminatanFormTS />;
+}
 ```
 
-2. Buat commit dengan format nama Anda:
-```bash
-git commit -m "Selesai pengerjaan ASAS Praktek - <Nama Santri>"
-```
-
-3. Push hasil pekerjaan ke repository forked Anda di GitHub:
-```bash
-git push origin main
-```
-
-4. Buka kembali halaman repository GitHub Anda di browser untuk memastikan seluruh kode dan commit terbaru telah ter-upload.
-5. Salin link repository GitHub Anda dan kirimkan ke form pengumpulan tugas yang disediakan oleh Ustadz/Penguji.
-
----
-
-*Selamat mengerjakan, utamakan kejujuran, kerapian kode, dan ketelitian sintaks!* 🌟
+Jalankan aplikasi, isi form, lalu buka console browser untuk melihat data yang dikirim.
